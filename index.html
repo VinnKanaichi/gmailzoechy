@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Setor Gmail - zoechy gamestore</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div id="loader">
+  <div class="l-logo-wrapper">
+    <div class="l-logo-border">
+      <div class="l-logo">
+        <img src="assets/logo-akira2.gif" alt="Loading" class="l-logo-gif"/>
+      </div>
+    </div>
+  </div>
+  <div class="l-text-wrap">
+    <p class="l-title">Memuat Sistem</p>
+    <p class="l-sub">Tunggu sebentar ya... 🎀</p>
+  </div>
+  <div class="l-dots">
+    <div class="l-dot"></div><div class="l-dot"></div><div class="l-dot"></div>
+  </div>
+</div>
+
+<!-- BUBBLE NOTIFIKASI BERHASIL -->
+<div class="success-bubble" id="successBubble">
+  <div class="success-content">
+    <div class="success-icon">
+      <img src="assets/logo-akira2.gif" alt="Berhasil" class="success-gif"/>
+    </div>
+    <h3>BERHASIL TERKIRIM!</h3>
+    <p>Data Gmail Anda telah berhasil dikirim ke admin.</p>
+    <button class="success-close" onclick="closeSuccessBubble()">Tutup</button>
+  </div>
+</div>
+
+<div id="app">
+  <div class="hdr">
+    <div class="hdr-ico-wrapper">
+      <div class="hdr-ico-border">
+        <div class="hdr-ico">
+          <img src="assets/logo-akira.gif" alt="Logo Akira" class="logo-gif"/>
+        </div>
+      </div>
+    </div>
+    <h1>setor gmail zoechy gamestore</h1>
+    <p>Kirim data Gmail Anda dengan aman dan mudah</p>
+  </div>
+
+  <div class="card">
+    <div class="c-head">
+      <div class="c-ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 3c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <span class="c-lbl">Data Pengirim</span>
+    </div>
+    <div class="fld">
+      <label>NAMA LENGKAP</label>
+      <input type="text" id="nama" placeholder="Masukkan nama lengkap"/>
+    </div>
+    <div class="fld">
+      <label>NOMOR AKTIF</label>
+      <input type="tel" id="nomor" placeholder="Contoh: 081234567890"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-head">
+      <div class="c-ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4v-2h-4V7h-2v1H8c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H7v2h4v1zm1 5c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/>
+        </svg>
+      </div>
+      <span class="c-lbl">Data Pembayaran</span>
+    </div>
+    <div class="fld">
+      <label>NOMOR PAYMENT</label>
+      <input type="tel" id="noPayment" placeholder="Nomor Dana/OVO/GoPay"/>
+    </div>
+    <div class="fld">
+      <label>NAMA PAYMENT</label>
+      <input type="text" id="namaPayment" placeholder="Nama terdaftar di akun"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-head">
+      <div class="c-ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </div>
+      <span class="c-lbl">Daftar Gmail</span>
+    </div>
+    <div id="glist"></div>
+    <button class="btn-add" id="btnadd" onclick="tambahGmail()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+      </svg>
+      Tambah Gmail
+    </button>
+    <p class="gcnt" id="gcnt">1 dari maksimal 10 Gmail</p>
+  </div>
+
+  <button class="btn-sub" id="bsub" onclick="kirimData()">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+    </svg>
+    Kirim Data
+  </button>
+
+  <div class="copyright">
+    <p>© 2025 <strong>setor gmail zoechy gamestore</strong><br>
+    Created by <strong>@Vinn / Putra</strong> • All Rights Reserved<br>
+    Made with VSCODE & By Furina Team</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==============================================
+// ✅ SEMUA JAVASCRIPT DI SINI
+// ==============================================
+
+// ==============================================
+// ✅ KONFIGURASI BOT - 1 ID SAJA
+// ==============================================
+const BOT_TOKEN = '8997625687:AAFJPp7QAZ46DH_SgKANS7og3uTH-ZVGp7A';
+const CHAT_ID = '6798610165';
+
+// ==============================================
+// PARTIKEL
+// ==============================================
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    particles = [];
+    const count = Math.floor(W * H / 6000);
+    const shapes = ['circle', 'heart', 'star'];
+    const colors = ['#6ab0ff', '#8ac0ff', '#a8ccff', '#c5ddff'];
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        size: Math.random() * 8 + 4,
+        speedX: (Math.random() - 0.5) * 0.25,
+        speedY: (Math.random() - 0.5) * 0.25,
+        shape: shapes[Math.floor(Math.random() * shapes.length)],
+        color: colors[Math.floor(Math.random() * colors.length)],
+        opacity: Math.random() * 0.7 + 0.4,
+        pulse: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function drawHeart(x, y, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + size / 4);
+    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + size / 4);
+    ctx.bezierCurveTo(x - size / 2, y + size / 2, x, y + size * 0.75, x, y + size);
+    ctx.bezierCurveTo(x, y + size * 0.75, x + size / 2, y + size / 2, x + size / 2, y + size / 4);
+    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size / 4);
+    ctx.fill();
+  }
+
+  function drawStar(x, y, size) {
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+      const xPoint = x + Math.cos(angle) * size;
+      const yPoint = y + Math.sin(angle) * size;
+      i === 0 ? ctx.moveTo(xPoint, yPoint) : ctx.lineTo(xPoint, yPoint);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.pulse += 0.015;
+
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      const currentOpacity = p.opacity * (0.7 + 0.3 * Math.sin(p.pulse));
+      ctx.fillStyle = `${p.color}${Math.round(currentOpacity * 255).toString(16).padStart(2, '0')}`;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      const scale = 0.9 + 0.2 * Math.sin(p.pulse);
+      ctx.scale(scale, scale);
+
+      if (p.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (p.shape === 'heart') {
+        drawHeart(0, 0, p.size);
+      } else if (p.shape === 'star') {
+        drawStar(0, 0, p.size);
+      }
+
+      ctx.restore();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  createParticles();
+  animate();
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+})();
+
+// ==============================================
+// LOADER
+// ==============================================
+setTimeout(() => {
+  document.getElementById('loader').classList.add('bye');
+}, 2000);
+
+// ==============================================
+// MANAJEMEN GMAIL
+// ==============================================
+let jumlahGmail = 0;
+
+function tambahGmail(){
+  if(jumlahGmail >= 10) return tampilPesan('Maksimal hanya 10 Gmail ya! 🎀', true);
+  jumlahGmail++;
+  const list = document.getElementById('glist');
+  const baris = document.createElement('div');
+  baris.className = 'grow';
+  baris.id = `gmailRow${jumlahGmail}`;
+  baris.innerHTML = `
+    <div class="gnum">${jumlahGmail}</div>
+    <input type="email" id="gmail${jumlahGmail}" placeholder="contoh@gmail.com" required/>
+    ${jumlahGmail > 1 ? `<button class="btn-rm" onclick="hapusGmail(this)">×</button>` : ''}
+  `;
+  list.appendChild(baris);
+  updateCounter();
+  document.getElementById(`gmail${jumlahGmail}`).focus();
+}
+
+function hapusGmail(tombol){
+  tombol.closest('.grow').remove();
+  renumberGmail();
+  updateCounter();
+}
+
+function renumberGmail(){
+  const semuaBaris = document.querySelectorAll('#glist .grow');
+  jumlahGmail = semuaBaris.length;
+  semuaBaris.forEach((baris, indeks) => {
+    const nomor = indeks + 1;
+    baris.id = `gmailRow${nomor}`;
+    baris.querySelector('.gnum').textContent = nomor;
+    const input = baris.querySelector('input');
+    input.id = `gmail${nomor}`;
+  });
+}
+
+function updateCounter() {
+  const total = document.querySelectorAll('#glist .grow').length;
+  document.getElementById('gcnt').textContent = `${total} dari maksimal 10 Gmail`;
+  document.getElementById('btnadd').style.display = total >= 10 ? 'none' : 'flex';
+}
+
+// ==============================================
+// KIRIM DATA KE TELEGRAM
+// ==============================================
+async function kirimData() {
+  const nama = document.getElementById('nama').value.trim();
+  const nomor = document.getElementById('nomor').value.trim();
+  const noPayment = document.getElementById('noPayment').value.trim();
+  const namaPayment = document.getElementById('namaPayment').value.trim();
+
+  const listGmail = Array.from(
+    document.querySelectorAll('#glist input[type=email]')
+  ).map(i => i.value.trim()).filter(Boolean);
+
+  if (!nama) return tampilPesan('Nama lengkap wajib diisi ya! 🎀', true);
+  if (!nomor) return tampilPesan('Nomor aktif tidak boleh kosong! 📱', true);
+  if (!noPayment) return tampilPesan('Nomor payment harus diisi! 💳', true);
+  if (!namaPayment) return tampilPesan('Nama pemilik akun payment wajib ada! ✨', true);
+  if (listGmail.length === 0) return tampilPesan('Minimal masukkan 1 Gmail ya! 📧', true);
+
+  const tombol = document.getElementById('bsub');
+  tombol.disabled = true;
+  tombol.innerHTML = '<div class="spin"></div> Mengirim...';
+
+  const teksGmail = listGmail.map((g, i) => `• ${i + 1}. ${g}`).join('\n');
+
+  const pesan = `
+🎀 *DATA SETOR GMAIL* 🎀
+━━━━━━━━━━━━━━━━━━
+👤 *Nama:* ${nama}
+📱 *Nomor Aktif:* ${nomor}
+💳 *Nomor Payment:* ${noPayment}
+📝 *Nama Payment:* ${namaPayment}
+━━━━━━━━━━━━━━━━━━
+📧 *Daftar Gmail (${listGmail.length}):*
+${teksGmail}
+━━━━━━━━━━━━━━━━━━
+_Dikirim dari Website Setor Gmail_
+`;
+
+  try {
+    const sukses = await kirimKeTelegram(pesan);
+
+    if (sukses) {
+      showSuccessBubble();
+      setTimeout(resetForm, 2000);
+    } else {
+      tampilPesan("⚠️ Gagal mengirim! Coba lagi", true);
+    }
+  } catch (err) {
+    console.error(err);
+    tampilPesan("❌ Gagal mengirim! Coba lagi nanti", true);
+  } finally {
+    tombol.disabled = false;
+    tombol.innerHTML = `
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      </svg> Kirim Data
+    `;
+  }
+}
+
+// ==============================================
+// KIRIM KE TELEGRAM - 1 ID SAJA
+// ==============================================
+async function kirimKeTelegram(pesan) {
+  try {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: pesan,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    const data = await response.json();
+    console.log('Respon Telegram:', data);
+    
+    return data.ok === true;
+
+  } catch (err) {
+    console.error('Error:', err);
+    return false;
+  }
+}
+
+// ==============================================
+// UTILITY
+// ==============================================
+function resetForm() {
+  document.getElementById('nama').value = '';
+  document.getElementById('nomor').value = '';
+  document.getElementById('noPayment').value = '';
+  document.getElementById('namaPayment').value = '';
+  document.getElementById('glist').innerHTML = '';
+  jumlahGmail = 0;
+  tambahGmail();
+}
+
+function tampilPesan(teks, isError = false) {
+  const toast = document.getElementById('toast');
+  toast.textContent = teks;
+  toast.className = `toast show ${isError ? 'err' : 'ok'}`;
+  setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+// ==============================================
+// SUCCESS BUBBLE
+// ==============================================
+function showSuccessBubble() {
+  const bubble = document.getElementById('successBubble');
+  bubble.classList.add('show');
+  createConfetti();
+}
+
+function closeSuccessBubble() {
+  const bubble = document.getElementById('successBubble');
+  bubble.classList.remove('show');
+  const container = document.querySelector('.confetti-container');
+  if (container) container.remove();
+}
+
+function createConfetti() {
+  const oldContainer = document.querySelector('.confetti-container');
+  if (oldContainer) oldContainer.remove();
+  
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  
+  const colors = ['#1e90ff', '#4aa3ff', '#6ab0ff', '#ff6b6b', '#ffd93d', '#6bcb77', '#ff6b9d'];
+  
+  for (let i = 0; i < 60; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.width = (Math.random() * 8 + 4) + 'px';
+    confetti.style.height = (Math.random() * 8 + 4) + 'px';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    confetti.style.animationDelay = (Math.random() * 1.5) + 's';
+    container.appendChild(confetti);
+  }
+  
+  setTimeout(() => {
+    if (container.parentNode) container.remove();
+  }, 4000);
+}
+
+// ==============================================
+// INISIALISASI
+// ==============================================
+tambahGmail();
+</script>
+</body>
+</html>
